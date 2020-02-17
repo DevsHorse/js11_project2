@@ -19,8 +19,8 @@ function getDayTime() {
     return word;
 }
 
-const weekDays = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
-let day = weekDays[currentDate.getDay()];
+const weekDay = currentDate.toLocaleDateString('ru-RU', {weekday: 'long'});
+let dayUp = weekDay[0].toUpperCase() + weekDay.substring(1);
 
 let currentTime = '';
 if (currentDate.getHours() > 21 || currentDate.getHours() >= 10 && currentDate.getHours() <= 12 || currentDate.getHours() === 0) {
@@ -36,6 +36,6 @@ const dayMs = 24 * 60 * 60 * 1000;
 const newYearWill =  Math.round((nextYear.getTime() - currentDate.getTime())/dayMs);
 
 div.innerHTML = `${getDayTime()}<br>
-Сегодня: ${day}<br>
+Сегодня: ${dayUp}<br>
 Текущее время: ${currentTime}<br>
 До нового года осталось ${newYearWill} дней`;
