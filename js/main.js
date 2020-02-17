@@ -56,13 +56,4 @@ window.addEventListener('DOMContentLoaded', function() {
 
     countTimer(deadlineCounter());
 
-
-
-
-
-
-
-
-
-
 });
