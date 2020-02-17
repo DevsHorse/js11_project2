@@ -11,7 +11,7 @@ window.addEventListener('DOMContentLoaded', function() {
             let dateStop = new Date(deadline).getTime(),
             dateNow = new Date().getTime(),
             timeRemaining = (dateStop - dateNow) / 1000;
-
+            console.log(dateNow)
             if (timeRemaining <= 0) {
                 return;
             }
@@ -19,7 +19,7 @@ window.addEventListener('DOMContentLoaded', function() {
             let seconds = Math.floor(timeRemaining % 60),
             minutes = Math.floor((timeRemaining / 60) % 60),
             hours = Math.floor(timeRemaining / 60 / 60);
-
+            console.log(24 + (Math.floor(timeRemaining / 60 / 60) - 24))
                 function a(time, ...arr) {
                     arr = arr.map( (item) => item < 10 ? '0' + item : '' + item);
                     let [seconds, minutes, hours] = [...arr];
@@ -44,7 +44,9 @@ window.addEventListener('DOMContentLoaded', function() {
         }, 1000);
     }
 
-    countTimer('2020-02-17T15:26:00');
+    
+
+    countTimer('2020-02-18T00:00:00');
     // setInterval(countTimer, 1000, '01 july 2019');
 
 
