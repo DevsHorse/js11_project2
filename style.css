@@ -1,0 +1,29 @@
+.body {
+    position: relative;
+}
+.btn {
+    border: 1px solid black;
+    font-weight: bold;
+    font-family: Roboto, sans-serif;
+    background-color: #334;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #fff;
+}
+.div-animate {
+    position: absolute;
+    top: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    width: 100px;
+    background-color: black;
+    border-radius: 10px;
+}
+.div-children {
+    height: 50px;
+    background-color: royalblue;
+    width: 50px;
+    border-radius: 5px;
+}

@@ -1,68 +1,51 @@
-window.addEventListener('DOMContentLoaded', function() {
-    'use strict';
+'use strict';
 
-    //Timer
-    function countTimer(deadline) {
-        let timeHours = document.querySelector('#timer-hours'),
-            timeMinutes = document.querySelector('#timer-minutes'),
-            timeSeconds = document.querySelector('#timer-seconds');
+const start = document.querySelector('.start');
+const reset = document.querySelector('.reset');
+const squad = document.querySelector('.div-animate');
 
-        function getTimeRemaining() {
-        
-            let dateStop = new Date(deadline).getTime(),
-            dateNow = new Date().getTime(),
-            timeRemaining = (dateStop - dateNow) / 1000,
-            lefthours = 24 + (Math.floor(timeRemaining / 60 / 60) - 24);
+let countAnimate = 0;
+let countAnimateTwo = 0;
+let anim = true;
 
-            if (lefthours < 0) {
-                deadlineCounter();
-                return;
-            }
-            
-            let seconds = Math.floor(timeRemaining % 60),
-            minutes = Math.floor((timeRemaining / 60) % 60),
-            hours = Math.floor(timeRemaining / 60 / 60);
-            
-                function getTime(time, ...arr) {
-                    arr = arr.map( (item) => item < 10 ? '0' + item : '' + item);
-                    let [seconds, minutes, hours] = [...arr];
-                    return { timeRemaining, seconds, minutes, hours };
-                }
-
-            return getTime(timeRemaining, seconds, minutes, hours);
-        }   
-
-        const updateClock = setInterval(function() {
-            let timer = getTimeRemaining();
-            if (timer === undefined) {
-                clearInterval(updateClock);
-                return;
-            }
-            timeHours.textContent = timer.hours;
-            timeMinutes.textContent = timer.minutes;
-            timeSeconds.textContent = timer.seconds;
-
-            if ( timer.timeRemaining <= 1 ) {
-                clearInterval(updateClock);
-            }
-        }, 1000);
+let interval;
+let animate = function(a) {
+    if (a === '') {
+        countAnimate = 0;
+        countAnimateTwo = 0;
+        anim = true;
+        animate(' ');
+        return;
+    } else if (a !== ' ') {
+        interval = requestAnimationFrame(animate);
+        countAnimate++;
+        countAnimateTwo++;
     }
 
-    function deadlineCounter() {
-        let date = new Date();
-        let deadline = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate() + 1}`;
-        return deadline; 
+    if(countAnimate < 1000) {
+        squad.style.transform = `translateX(${countAnimate}px)
+        rotate(${countAnimate}deg)
+        translateY(${countAnimateTwo * 0.2}px)`;
+    } else if (countAnimate >= 1000 && countAnimate < 2000) {
+        squad.style.transform = `translateX(${2000 - countAnimate}px)
+            rotate(${2000 - countAnimate}deg) translateY(30px)`;
+    } else {
+        cancelAnimationFrame(interval);
+    }     
+};
+
+start.addEventListener('click', function(e) {
+    e.preventDefault();
+    if (anim) {
+        interval = requestAnimationFrame(animate);
+        anim = false;
+    } else {
+        anim = true;
+        cancelAnimationFrame(interval);
     }
+});
 
-    countTimer(deadlineCounter());
-
-
-
-
-
-
-
-
-
-
+reset.addEventListener('click', function() {
+    cancelAnimationFrame(interval);
+    animate('');
 });
