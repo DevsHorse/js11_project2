@@ -72,6 +72,45 @@ window.addEventListener('DOMContentLoaded', function() {
         closeBtn.addEventListener('click', handlerMenu);
         menuItems.forEach( elem => elem.addEventListener('click', handlerMenu));
 
+
+
+        // function а(item, dr) {
+        //     const end = item.offsetTop;
+        //     let start = document.documentElement.scrollTop;
+        //     let duration = dr;
+
+        //     let animateScrollId;
+
+        //         const animateScroll = function() {
+        //         animateScrollId = requestAnimationFrame(animateScroll);
+        //         console.log(start);
+        //         console.log(end);
+        //         document.documentElement.scrollTop = start;
+        //         duration++;
+        //         if (duration > 20) {
+        //             duration = 20;
+        //         }
+        //         start += duration;
+        //         if (start > end) {
+        //             cancelAnimationFrame(animateScrollId);
+        //         }
+        //     animateScroll();
+        // };
+        // }
+        
+
+        // menuLinks.forEach( item => {
+        //     const itemId = item.getAttribute('href').substring(1);
+        //     item.addEventListener('click', e => {
+        //         e.preventDefault();
+        //         const block = document.getElementById(itemId);
+        //         а(block, 1);
+        //     });
+        // });
+
+
+
+
     };
 
     toggleMenu();
