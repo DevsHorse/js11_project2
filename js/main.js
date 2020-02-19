@@ -71,45 +71,58 @@ window.addEventListener('DOMContentLoaded', function() {
         btnMenu.addEventListener('click', handlerMenu); 
         closeBtn.addEventListener('click', handlerMenu);
         menuItems.forEach( elem => elem.addEventListener('click', handlerMenu));
-
-
-
-        // function а(item, dr) {
-        //     const end = item.offsetTop;
-        //     let start = document.documentElement.scrollTop;
-        //     let duration = dr;
-
-        //     let animateScrollId;
-
-        //         const animateScroll = function() {
-        //         animateScrollId = requestAnimationFrame(animateScroll);
-        //         console.log(start);
-        //         console.log(end);
-        //         document.documentElement.scrollTop = start;
-        //         duration++;
-        //         if (duration > 20) {
-        //             duration = 20;
-        //         }
-        //         start += duration;
-        //         if (start > end) {
-        //             cancelAnimationFrame(animateScrollId);
-        //         }
-        //     animateScroll();
-        // };
-        // }
         
+        //Scroll links animate 
+        function scroll(block, dur) {
+            const endPoint = block.offsetTop;
 
-        // menuLinks.forEach( item => {
-        //     const itemId = item.getAttribute('href').substring(1);
-        //     item.addEventListener('click', e => {
-        //         e.preventDefault();
-        //         const block = document.getElementById(itemId);
-        //         а(block, 1);
-        //     });
-        // });
+            let idAnimate;
+            let num = 0;
 
+            function animateScroll() {  
+                idAnimate = requestAnimationFrame(animateScroll);
+                
+                // Function to increase scroll speed
+                function duration(count) {
+                    if (num > (endPoint * 0.95) && count !== 1) {
+                        count = count / 2;
+                    } else {
+                        if (endPoint > 4000) {
+                            count += 3;
+                        } else  if (endPoint > 3000) {
+                            count += 2;
+                        }
+                    }
+                    num = num + (count * 20);  
+                }
 
+                duration(dur);
+                document.documentElement.scrollTop = num;
 
+                if (num > endPoint) {
+                    document.documentElement.scrollTop = endPoint;
+                    cancelAnimationFrame(idAnimate);
+                }
+            }
+
+            idAnimate = requestAnimationFrame(animateScroll);
+        }
+
+        menuLinks.forEach( item => {
+            const itemId = item.getAttribute('href').substring(1);
+            item.addEventListener('click', e => {
+                e.preventDefault();
+                const block = document.getElementById(itemId);
+                scroll(block, 3);
+            });
+        });
+
+        //Button to next slide at main block
+        let mainLinkImg = document.querySelector('main>a[href="#service-block"]');
+        mainLinkImg.addEventListener('click', (e) => {
+            e.preventDefault();
+            scroll(document.getElementById('service-block'), 1);
+        });
 
     };
 
