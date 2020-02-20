@@ -114,8 +114,8 @@ window.addEventListener('DOMContentLoaded', function() {
                     event.preventDefault();
                     scroll(document.getElementById('service-block'), 2);
                 }
-            } else {
-                if ( target.classList.contains('close-btn') || !target.closest('menu') ) {
+            } else if (menu.classList.contains('active-menu')) {
+                if ( target.closest('menu') === null || target.classList.contains('close-btn') ) {
                     // Close menu
                     handlerMenu();
                 } else if ( target.tagName === 'A' && !target.classList.contains('.close-btn') ) {
@@ -125,7 +125,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     const targetId = target.getAttribute('href').substring(1);
                     const block = document.getElementById(targetId);
                     scroll(block, 3);
-                }
+                } 
             }
         });
     };
