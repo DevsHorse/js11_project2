@@ -226,21 +226,17 @@ document.addEventListener('DOMContentLoaded', function() {
         const slider = () => {
 
             const slide = document.querySelectorAll('.portfolio-item'),
-                btn = document.querySelectorAll('.protfolio-btn'),
-                slider = document.querySelector('.portfolio-content');   
-
-            const dotsUl = document.querySelector('.portfolio-dots');
-            
+                  slider = document.querySelector('.portfolio-content'),
+                  dotsUl = document.querySelector('.portfolio-dots');
 
             const addDots = () => {
                for ( let i = 0; i < slide.length; i++) {
                 let dotElement = document.createElement('li');
-                    dotElement.classList.add('dot');
-                    if ( i = 0 ) dotElement.classList.add('dot-active');
-                    dotsUl.appendChild(dotElement);
+                dotsUl.appendChild(dotElement);
+                dotElement.classList.add('dot');
+                if ( i === 0 ) dotElement.classList.add('dot-active');
                }
             };
-
 
             addDots();     
 
