@@ -333,4 +333,21 @@ document.addEventListener('DOMContentLoaded', () => {
 		slider();
 	}
 
+	{ //calculate
+		const inputs = document.querySelectorAll('.calc-item');
+		inputs.forEach(item => {
+			item.addEventListener('input', e => e.target.value = e.target.value.replace(/\D/g, ''));
+		});
+	}
+
+	{ // Out team
+		const commandPhoto = document.querySelectorAll('#command .command__photo');
+
+		commandPhoto.forEach(item => {
+			const photoSrc = item.getAttribute('src');
+			const photoData = item.dataset.img;
+			item.addEventListener('mouseenter', event => event.target.src = photoData);
+			item.addEventListener('mouseleave', event => event.target.src = photoSrc);
+		});
+	}
 });
