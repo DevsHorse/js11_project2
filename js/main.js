@@ -354,7 +354,6 @@ document.addEventListener('DOMContentLoaded', () => {
 				let dayValue = 1;
 				const typeValue = calcType.options[calcType.selectedIndex].value;
 				const squareValue = +calcSquare.value;
-
 				if (calcCount.value > 1) {
 					countValue += (calcCount.value - 1) / 10;
 				}
@@ -368,8 +367,31 @@ document.addEventListener('DOMContentLoaded', () => {
 				if (typeValue && squareValue) {
 					total = price * typeValue * squareValue * countValue * dayValue;
 				}
+				if (calcDay.value && calcSquare.value && calcCount.value) {
+					let counter = 0;
+					const setTotal = setInterval(() => {
+						if (total < 3000) {
+							counter += 100;
+						} else if (total < 6000) {
+							counter += 200;
+						} else if (total < 100000) {
+							counter += 2000;
+						} else {
+							counter += 10000;
+						}
+						totalValue.textContent = counter;
+						if (counter >= total) {
+							totalValue.textContent = total;
+							clearInterval(setTotal);
+						}
+					}, 50);
 
-				totalValue.textContent = total;
+					calcBlock.addEventListener('change', e => {
+						if (e.target.matches('select') || e.target.matches('input')) {
+							clearInterval(setTotal);
+						}
+					});
+				}
 			};
 
 			calcBlock.addEventListener('change', event => {
