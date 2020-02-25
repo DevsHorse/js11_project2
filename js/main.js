@@ -348,6 +348,19 @@ document.addEventListener('DOMContentLoaded', () => {
 				totalValue = document.getElementById('total');
 
 
+			const doubleListener = (fn, str, clearFn) => {
+				calcBlock.addEventListener('change', event => {
+					const target = event.target;
+					if (target.matches('select') || target.matches('input')) {
+						if (str === 'sum') {
+							fn();
+						} else if (str === 'clear') {
+							fn(clearFn);
+						}
+					}
+				});
+			};
+
 			const countSum = () => {
 				let total = 0;
 				let countValue = 1;
@@ -386,24 +399,14 @@ document.addEventListener('DOMContentLoaded', () => {
 						}
 					}, 50);
 
-					calcBlock.addEventListener('change', e => {
-						if (e.target.matches('select') || e.target.matches('input')) {
-							clearInterval(setTotal);
-						}
-					});
+					doubleListener(clearInterval, 'clear', setTotal);
 				}
 			};
 
-			calcBlock.addEventListener('change', event => {
-				const target = event.target;
-				if (target.matches('select') || target.matches('input')) {
-					countSum();
-				}
-			});
+			doubleListener(countSum, 'sum');
 		};
 
 		calc(100);
-
 	}
 
 	{ // Out team
