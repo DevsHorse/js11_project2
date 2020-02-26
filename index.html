@@ -411,7 +411,73 @@
 		</div>
 	</div>
 </div>
+<script src="./plugins/validator/validator.js"></script>
+<script>
+	const validForm1 = new Validator({
+		selector: '#form1',
+		pattern: {
+			// phone: /^$/,
+			// email: /^$/,
+			// name: /^$/
+		},
+		method: {
+			'form1-phone': [
+				['notEmpty'],
+				['pattern', 'phone']
+			],
+			'form1-email': [
+				['notEmpty'],
+				['pattern', 'email']
+			],
+			'form1-name': [
+				['notEmpty'],
+				['pattern', 'name']
+			]
+		},
+		cssOptions: {
+			margin: '-30px auto 0px',
+			number: '1',
+			position: 'relative'
+		}
+	});
 
+	validForm1.init();
+
+	const validForm2 = new Validator({
+		selector: '#form2',
+		pattern: {
+			// phone: /^$/,
+			// email: /^$/,
+			// name: /^$/,
+			// text: /^$/
+		},
+		method: {
+			'form2-phone': [
+				['notEmpty'],
+				['pattern', 'phone']
+			],
+			'form2-email': [
+				['notEmpty'],
+				['pattern', 'email']
+			],
+			'form2-name': [
+				['notEmpty'],
+				['pattern', 'name']
+			],
+			'form2-message': [
+				['notEmpty'],
+				['pattern', 'text']
+			]
+		},
+		cssOptions: {
+			margin: '0px',
+			number: '2',
+			position: 'absolute'
+		}
+	});
+
+	validForm2.init();
+</script>
 <script src="./js/main.js"></script>
 </body>
 </html>
