@@ -380,25 +380,24 @@ document.addEventListener('DOMContentLoaded', () => {
 				if (typeValue && squareValue) {
 					total = Math.floor(price * typeValue * squareValue * countValue * dayValue);
 				}
+
 				if (calcDay.value && calcSquare.value && calcCount.value) {
+					let setTotalId;
 					let counter = 0;
-					const setTotal = setInterval(() => {
-						if (total < 3000) {
-							counter += 100;
-						} else if (total < 6000) {
-							counter += 200;
-						} else if (total < 100000) {
-							counter += 2000;
-						} else {
-							counter += 10000;
-						}
+
+					const setTotal = () => {
+						setTotalId = requestAnimationFrame(setTotal);
+
+						counter += Math.floor(total / 40);
 						totalValue.textContent = counter;
+
 						if (counter >= total) {
 							totalValue.textContent = total;
-							clearInterval(setTotal);
+							cancelAnimationFrame(setTotalId);
 						}
-					}, 50);
-					doubleListener(clearInterval, 'clear', setTotal);
+					};
+					setTotalId = requestAnimationFrame(setTotal);
+					doubleListener(cancelAnimationFrame, 'clear', setTotalId);
 				} else {
 					totalValue.textContent = 0;
 				}
