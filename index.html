@@ -477,6 +477,36 @@
 	});
 
 	validForm2.init();
+
+	const validForm3 = new Validator({
+		selector: '#form3',
+		pattern: {
+			// phone: /^$/,
+			// email: /^$/,
+			// name: /^$/
+		},
+		method: {
+			'form3-phone': [
+				['notEmpty'],
+				['pattern', 'phone']
+			],
+			'form3-email': [
+				['notEmpty'],
+				['pattern', 'email']
+			],
+			'form3-name': [
+				['notEmpty'],
+				['pattern', 'name']
+			]
+		},
+		cssOptions: {
+			margin: '0px auto',
+			number: '3',
+			position: 'relative'
+		}
+	});
+
+	validForm3.init();
 </script>
 <script src="./js/main.js"></script>
 </body>
