@@ -62,7 +62,6 @@ class Validator {
 	showError(elem) {
 		elem.classList.remove('success');
 		elem.classList.add('error');
-		console.log(elem);
 		if (elem.nextElementSibling &&
 			elem.nextElementSibling.classList.contains(`validator${this.cssOptions.number}-error`)) return;
 
