@@ -574,7 +574,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			};
 
 			runValidator('1', 'form1-phone', 'form1-email', 'form1-name', '-30px auto 0px', 'relative');
-			runValidator('2', 'form2-phone', 'form2-email', 'form2-name', '0px', 'absolute');
+			runValidator('2', 'form2-phone', 'form2-email', 'form2-name', '0px', 'absolute', 'form2-message');
 			runValidator('3', 'form3-phone', 'form3-email', 'form3-name', '0px auto', 'relative');
 
 			/*
