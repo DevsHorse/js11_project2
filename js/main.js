@@ -425,7 +425,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		const wrappValidAndAjax = () => {
 			let isValid = false;
 			/*
-			@	Validator -----------------------------------------------------------------------------
+				@	Validator -----------------------------------------------------------------------------
 		  */
 			class Validator {
 				constructor({ selector, pattern = {}, method, cssOptions = {} }) {
