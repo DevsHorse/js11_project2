@@ -608,27 +608,13 @@ document.addEventListener('DOMContentLoaded', () => {
 				transform: translateX(-1000%);
 				`;
 
-				const postData = body => {
-					const promise = new Promise((resolve, reject) => {
-						const request = new XMLHttpRequest();
-						request.addEventListener('readystatechange', () => {
-							if (request.readyState !== 4) {
-								return;
-							}
-							if (request.status === 200) {
-								console.log('+');
-								resolve();
-							} else {
-								reject(request.statusText);
-							}
-						});
-						request.open('POST', './server.php');
-						request.setRequestHeader('Content-Type', 'application/json');
-						request.send(JSON.stringify(body));
-					});
-					return promise;
-				};
-
+				const postData = body => fetch('./server.php', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(body)
+				});
 
 				const formSpliter = (form, endAnimation) => {
 					form.addEventListener('submit', event => {
@@ -695,12 +681,6 @@ document.addEventListener('DOMContentLoaded', () => {
 								animationWrapper();
 							};
 
-							const setErrorMessage = error => {
-								statusMessage.classList.remove('cssload-preloader');
-								statusMessage.innerHTML = errorMessage;
-								console.error(error);
-							};
-
 							const clearInputs = () => {
 								form.querySelectorAll('input').forEach(item => {
 									item.value = '';
@@ -709,10 +689,21 @@ document.addEventListener('DOMContentLoaded', () => {
 								});
 							};
 
+							const setErrorMessage = () => {
+								statusMessage.classList.remove('cssload-preloader');
+								statusMessage.innerHTML = errorMessage;
+								console.error('network status not 200!');
+							};
+
 							postData(body)
-								.then(setSuccessMesage)
+								.then(response => {
+									if (response.status !== 200) {
+										throw setErrorMessage;
+									}
+									setSuccessMesage();
+								})
 								.then(clearInputs)
-								.catch(setErrorMessage);
+								.catch(error => error());
 						}
 					});
 				};
