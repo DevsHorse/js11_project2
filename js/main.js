@@ -608,64 +608,27 @@ document.addEventListener('DOMContentLoaded', () => {
 				transform: translateX(-1000%);
 				`;
 
-				const postData = (body, outputData, errorData) => {
-					const request = new XMLHttpRequest();
-					request.addEventListener('readystatechange', () => {
-						if (request.readyState !== 4) {
-							return;
-						}
-						if (request.status === 200) {
-							outputData();
-						} else {
-							errorData(request.status);
-						}
+				const postData = body => {
+					const promise = new Promise((resolve, reject) => {
+						const request = new XMLHttpRequest();
+						request.addEventListener('readystatechange', () => {
+							if (request.readyState !== 4) {
+								return;
+							}
+							if (request.status === 200) {
+								console.log('+');
+								resolve();
+							} else {
+								reject(request.statusText);
+							}
+						});
+						request.open('POST', './server.php');
+						request.setRequestHeader('Content-Type', 'application/json');
+						request.send(JSON.stringify(body));
 					});
-
-					request.open('POST', './server.php');
-					request.setRequestHeader('Content-Type', 'application/json');
-					request.send(JSON.stringify(body));
+					return promise;
 				};
 
-				const animation = endAnimation => {
-					let idAnimate;
-					let count = 1000;
-					let opacity = 0;
-					const animateSuccess = () => {
-						idAnimate = requestAnimationFrame(animateSuccess);
-						count -= 25;
-
-						count >= 25 ? opacity = 1 - (count / 1000) : opacity = 1;
-
-						if (count === endAnimation) {
-							cancelAnimationFrame(idAnimate);
-						}
-						divSuccessMessage.style.transform = `translateX(-${count}%)`;
-						divSuccessMessage.style.opacity = `${opacity}`;
-					};
-					idAnimate = requestAnimationFrame(animateSuccess);
-				};
-
-				const setSuccessMesage = (form, endAnimation) => {
-					statusMessage.classList.remove('cssload-preloader');
-					statusMessage.innerHTML = '';
-					statusMessage.appendChild(divSuccessMessage);
-					divSuccessMessage.innerHTML = successMessage;
-
-					const removeMassage = () => {
-						divSuccessMessage.innerHTML = '';
-					};
-
-					setTimeout(removeMassage, 2000);
-
-					if (form.id === 'form3') {
-						divSuccessMessage.style.left = 0;
-						divSuccessMessage.style.top = '-15px';
-					} else {
-						divSuccessMessage.style.left = '50%';
-						divSuccessMessage.style.top = 0;
-					}
-					animation(endAnimation);
-				};
 
 				const formSpliter = (form, endAnimation) => {
 					form.addEventListener('submit', event => {
@@ -690,18 +653,66 @@ document.addEventListener('DOMContentLoaded', () => {
 							for (const val of formData.entries()) {
 								body[val[0]] = val[1];
 							}
-							postData(body, () => {
-								setSuccessMesage(form, endAnimation);
+
+							const animationWrapper = () => {
+								let idAnimate;
+								let count = 1000;
+								let opacity = 0;
+								const animateSuccess = () => {
+									idAnimate = requestAnimationFrame(animateSuccess);
+									count -= 25;
+
+									count >= 25 ? opacity = 1 - (count / 1000) : opacity = 1;
+
+									if (count === endAnimation) {
+										cancelAnimationFrame(idAnimate);
+									}
+									divSuccessMessage.style.transform = `translateX(-${count}%)`;
+									divSuccessMessage.style.opacity = `${opacity}`;
+								};
+								idAnimate = requestAnimationFrame(animateSuccess);
+							};
+
+							const setSuccessMesage = () => {
+								statusMessage.classList.remove('cssload-preloader');
+								statusMessage.innerHTML = '';
+								statusMessage.appendChild(divSuccessMessage);
+								divSuccessMessage.innerHTML = successMessage;
+
+								// Remove success message timer
+								const removeMassage = () => {
+									divSuccessMessage.innerHTML = '';
+								};
+								setTimeout(removeMassage, 2000);
+								// ------------------------------
+								if (form.id === 'form3') {
+									divSuccessMessage.style.left = 0;
+									divSuccessMessage.style.top = '-15px';
+								} else {
+									divSuccessMessage.style.left = '50%';
+									divSuccessMessage.style.top = 0;
+								}
+								animationWrapper();
+							};
+
+							const setErrorMessage = error => {
+								statusMessage.classList.remove('cssload-preloader');
+								statusMessage.innerHTML = errorMessage;
+								console.error(error);
+							};
+
+							const clearInputs = () => {
 								form.querySelectorAll('input').forEach(item => {
 									item.value = '';
 									item.classList.remove('success');
 									form.classList.remove('sended');
 								});
-							}, error => {
-								statusMessage.classList.remove('cssload-preloader');
-								statusMessage.innerHTML = errorMessage;
-								console.error(error);
-							});
+							};
+
+							postData(body)
+								.then(setSuccessMesage)
+								.then(clearInputs)
+								.catch(setErrorMessage);
 						}
 					});
 				};
