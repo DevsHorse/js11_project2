@@ -14,8 +14,7 @@ module.exports = {
 	},
 	output: {
 		path: DEST,
-		filename: '[name].js',
-		publicPath: '/dist'
+		filename: '[name].js'
 	},
 	devServer: {
 		overlay: true,
