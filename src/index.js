@@ -8,6 +8,8 @@ import "fetch-polyfill";
 import elementClosest from "element-closest";
 elementClosest(window);
 import "remove-polyfill";
+import "date-polyfill";
+
 
 
 import timerBody from './modules/timerBody';
