@@ -118,7 +118,7 @@ const wrapValidAndAjax = () => {
       }
 
       if (!this.pattern.name) {
-        this.pattern.name = /^[А-Я][а-я]{1,10}$/;
+        this.pattern.name = /^[а-я]{1,}$/;
       }
     }
   }

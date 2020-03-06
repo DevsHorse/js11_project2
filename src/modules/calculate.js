@@ -46,7 +46,7 @@ const calculate = () => {
         total = Math.floor(price * typeValue * squareValue * countValue * dayValue);
       }
 
-      if (calcDay.value && calcSquare.value && calcCount.value) {
+      if (calcDay.value > 0 && calcSquare.value > 0 && calcCount.value > 0) {
         let setTotalId;
         let counter = 0;
 
