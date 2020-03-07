@@ -3,8 +3,8 @@ const togglePopUp = () => {
 		popupBtn = document.querySelectorAll('.popup-btn'),
 		popupContent = popup.querySelector('.popup-content'),
 		popupContentRect =  popupContent.getBoundingClientRect(),
-		popupContentX = popupContentRect.x;
-
+		popupContentWidth = popupContentRect.width;
+	console.log(popupContentRect);
 	popupBtn.forEach(elem => elem.addEventListener('click', () => {
 		popup.style.display = 'block';
 		if (screen.width > 768) {
@@ -35,7 +35,7 @@ const togglePopUp = () => {
 		const animationFunc = () => {
 			animationId = requestAnimationFrame(animationFunc);
 			count += 50;
-			if (count >= popupContentX - 50) {
+			if (count >= popupContentWidth - 50) {
 				cancelAnimationFrame(animationId);
 			}
 

@@ -118,7 +118,7 @@ const wrapValidAndAjax = () => {
       }
 
       if (!this.pattern.name) {
-        this.pattern.name = /^[а-я]{1,}$/;
+        this.pattern.name = /^[а-яА-Я]{1,}$/;
       }
     }
   }
@@ -141,14 +141,21 @@ const wrapValidAndAjax = () => {
         position: pos
       }
     });
+  
+    const form = document.querySelector(`#form${num}`);
+    const elementsForm = [...form.elements].filter(item =>
+      item.tagName.toLowerCase() !== 'BUTTON' && item.type !== 'button');
 
-    validForm.method[`${phone}`] = [['notEmpty'], ['pattern', 'phone']];
-    validForm.method[`${email}`] = [['notEmpty'], ['pattern', 'email']];
-    validForm.method[`${name}`] = [['notEmpty'], ['pattern', 'name']];
-    if (text) validForm.method[`${text}`] = [['notEmpty'], ['pattern', 'text']];
-    validForm.init();
+      elementsForm.forEach(item => item.addEventListener('focus', () => { 
+        validForm.method[`${phone}`] = [['notEmpty'], ['pattern', 'phone']];
+        validForm.method[`${email}`] = [['notEmpty'], ['pattern', 'email']];
+        validForm.method[`${name}`] = [['notEmpty'], ['pattern', 'name']];
+        if (text) validForm.method[`${text}`] = [['notEmpty'], ['pattern', 'text']];
+        validForm.init();
+      }));
   };
 
+  
   runValidator('1', 'form1-phone', 'form1-email', 'form1-name', '-30px auto 0px', 'relative');
   runValidator('2', 'form2-phone', 'form2-email', 'form2-name', '0px', 'absolute', 'form2-message');
   runValidator('3', 'form3-phone', 'form3-email', 'form3-name', '0px auto', 'relative');

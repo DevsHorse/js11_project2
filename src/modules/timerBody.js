@@ -2,7 +2,7 @@ const timerBody = () => {
   //Deadline
   const deadlineCounter = () => {
     const date = new Date();
-    const deadline = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate() + 1}`;
+    const deadline = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate() + 1}`;
     return deadline;
   };
 
